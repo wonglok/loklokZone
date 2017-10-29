@@ -113,31 +113,13 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
 `)
       mfs.writeFileSync(srcPath + '/main.js', `
+/* global: Vue */
 import App from './App.vue'
 
 new Vue({
@@ -170,7 +152,7 @@ new Vue({
   </head>
   <body>
     <div id="app"></div>
-    <script src="${routeBase}/dist/build.js"></script>
+    <script src="${webpackBase}/dist/build.js"></script>
   </body>
 </html>
 
@@ -198,20 +180,20 @@ new Vue({
     })
   }
 
-  app.get(rootBase + '/:zid*', (req, res) => {
-    function processInfo ({ zid }) {
-      return setupSrc({ routeBase: routeBase + '/' + zid })
-        .then(({ compiler, mfs }) => {
-          cache.set(zid, { mfs, state: 'compile' })
-          return compileSrc({ compiler, mfs })
-        })
-        .then(({ mfs }) => {
-          cache.set(zid, { mfs, state: 'ready' })
-          buzz.trigger('compile-ready-' + zid, { mfs, state: 'ready' })
-          return { mfs }
-        })
-    }
+  function processInfo ({ zid }) {
+    return setupSrc({ routeBase: routeBase + '/' + zid })
+      .then(({ compiler, mfs }) => {
+        cache.set(zid, { mfs, state: 'compile' })
+        return compileSrc({ compiler, mfs })
+      })
+      .then(({ mfs }) => {
+        cache.set(zid, { mfs, state: 'ready' })
+        buzz.trigger('compile-ready-' + zid, { mfs, state: 'ready' })
+        return { mfs }
+      })
+  }
 
+  app.get(rootBase + '/:zid*', (req, res) => {
     function sender ({ mfs }) {
       if (req.path === routeBase + '/' + req.params.zid + '/dist/index.html') {
         res.set('html')
@@ -228,6 +210,7 @@ new Vue({
         }
       }
     }
+
     var data = cache.get(req.params.zid)
     if (data && data.state === 'ready') {
       var { mfs } = data
