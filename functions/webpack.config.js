@@ -1,7 +1,7 @@
 // var path = require('path')
 var webpack = require('webpack')
 
-module.exports = function ({ entryBase, outputBase, minify }) {
+module.exports = function ({ rootBase, entryBase, outputBase, minify }) {
   var result = {
     entry: entryBase + '/main.js',
     output: {

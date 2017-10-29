@@ -34,7 +34,8 @@ var fs = require('fs')
 // var preloadPackage = require('./preloadPackage.js') d
 
 exports.webpacker = function ({ app }) {
-  var routeBase = '/v1/fun'
+  var routeBase = '/v1/vuejs'
+  var rootBase = routeBase
 
   var buzz = makeEventBus()
   var cache = new LRU(30)
@@ -75,6 +76,7 @@ exports.webpacker = function ({ app }) {
 
       mfs.mkdirpSync(srcPath + '')
       mfs.writeFileSync(srcPath + '/App.vue', `
+
 <template>
   <div id="app">
     <h1>{{ msg }}</h1>
@@ -106,7 +108,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -134,12 +136,9 @@ a {
   color: #42b983;
 }
 </style>
-      `)
+`)
       mfs.writeFileSync(srcPath + '/main.js', `
-import './apple';
 import App from './App.vue'
-
-console.log(App)
 
 new Vue({
   components: { App },
@@ -147,11 +146,6 @@ new Vue({
   template: '<App />'
 })
 
-      `)
-      mfs.writeFileSync(srcPath + '/apple.js', `
-        export default {
-          abc: 123
-        }
       `)
 
       mfs.mkdirpSync(webpackBase + '/dist')
@@ -163,17 +157,23 @@ new Vue({
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>title</title>
-  <meta name="author" content="name">
-  <meta name="description" content="description here">
-  <meta name="keywords" content="keywords,here">
+  <meta name="author" content="Wong Lok">
+  <meta name="description" content="Running WebPack inside Google Cloud Functions">
+  <meta name="keywords" content="fun fun, vuejs">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+  <style type="text/css">
+    html, body {
+      margin: 0px;
+      padding: 0px;
+    }
+  </style>
   </head>
   <body>
-    app
     <div id="app"></div>
     <script src="${routeBase}/dist/build.js"></script>
   </body>
 </html>
+
       `)
 
       //
@@ -198,7 +198,7 @@ new Vue({
     })
   }
 
-  app.get('/v1/fun/:zid*', (req, res) => {
+  app.get(rootBase + '/:zid*', (req, res) => {
     function processInfo ({ zid }) {
       return setupSrc({ routeBase: routeBase + '/' + zid })
         .then(({ compiler, mfs }) => {
