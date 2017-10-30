@@ -46,8 +46,9 @@ var cache = new LRU(50)
 
 exports.clearCacheOnSave = functions.database.ref('/vuejs/{uid}/{zid}/files').onWrite(event => {
   var zid = event.params.zid
+  var uid = event.params.uid
   console.log('***** Cleraing Cache at', zid)
-  cache.set(zid, false)
+  cache.set(zid + uid, false)
   return event.data.ref
 })
 
@@ -164,11 +165,11 @@ exports.webpacker = function ({ app, anotherBase }) {
   function processInfo ({ zid, uid }) {
     return setupSrc({ base: routeBase + '/' + uid + '/' + zid, uid, zid })
       .then(({ compiler, mfs }) => {
-        cache.set(zid, { mfs, state: 'compile' })
+        cache.set(zid + uid, { mfs, state: 'compile' })
         return compileSrc({ compiler, mfs })
       })
       .then(({ mfs }) => {
-        cache.set(zid, { mfs, state: 'ready' })
+        cache.set(zid + uid, { mfs, state: 'ready' })
         buzz.trigger('compile-ready-' + zid, { mfs, state: 'ready' })
         return { mfs }
       })
@@ -195,7 +196,7 @@ exports.webpacker = function ({ app, anotherBase }) {
       }
     }
 
-    var data = cache.get(zid)
+    var data = cache.get(zid + uid)
     if (req.query && req.query.force === 'compile') {
       processInfo({ zid, uid })
         .then(({ mfs }) => {
