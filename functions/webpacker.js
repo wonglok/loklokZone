@@ -2,6 +2,8 @@ var MemoryFileSystem = require('memory-fs')
 var webpackConfig = require('./webpack.config.js')
 var webpack = require('webpack')
 var functions = require('firebase-functions')
+var admin = require('./admin').admin
+var snippets = require('./snippets')
 
 function makeEventBus () {
   var evts = {}
@@ -39,21 +41,71 @@ function makeEventBus () {
 var LRU = require('lru')
 var path = require('path')
 var fs = require('fs')
-// var preloadPackage = require('./preloadPackage.js') d
-
 var buzz = makeEventBus()
 var cache = new LRU(50)
 
-exports.clearCacheOnSave = functions.database.ref('/vuejs/{zid}/refresher').onWrite(event => {
+exports.clearCacheOnSave = functions.database.ref('/vuejs/{uid}/{zid}/files').onWrite(event => {
   var zid = event.params.zid
   console.log('***** Cleraing Cache at', zid)
   cache.set(zid, false)
+  return event.data.ref
 })
 
-exports.webpacker = function ({ app }) {
+function getZoneFiles ({ uid, zid }) {
+  return new Promise((resolve, reject) => {
+    admin.database().ref('/vuejs').child(uid).child(zid).once('value').then((snapshot) => {
+      resolve(snapshot.val())
+    }, (err) => {
+      reject(err)
+    })
+  })
+}
+
+function writeToMFS ({ mfs, filesArr, srcPath, zid, webpackBase }) {
+  filesArr = filesArr || []
+  var sourcesWithoutHTML = filesArr.filter((file) => {
+    return file.path.indexOf('index.html') === -1
+  })
+
+  mfs.mkdirpSync(srcPath)
+  mfs.writeFileSync(srcPath + '/App.vue', snippets.AppVue())
+  mfs.writeFileSync(srcPath + '/main.js', snippets.entryJS())
+
+  sourcesWithoutHTML.forEach((src) => {
+    console.log(src)
+    try {
+      mfs.writeFileSync(srcPath + src.path, src.content)
+    } catch (e) {
+      console.error(e)
+    }
+  })
+
+  mfs.mkdirpSync(webpackBase + '/dist')
+
+  var sourceOfTHML = filesArr.filter((file) => {
+    return file.path.indexOf('index.html') !== -1
+  })[0]
+  sourceOfTHML = sourceOfTHML || snippets.html()
+
+  var refresher = snippets.refresher({ zid })
+  mfs.writeFileSync(webpackBase + '/dist/index.html', sourceOfTHML.replace('<!--inject-auto-refresher-here-->', refresher))
+}
+
+function transformToArray (srcObj) {
+  var keyArr = Object.keys(srcObj)
+  var bucket = []
+  for (var i = 0; i < keyArr.length; i++) {
+    var obj = srcObj[keyArr[i]]
+    obj['.key'] = keyArr[i]
+    bucket.push(obj)
+  }
+  return bucket
+}
+
+exports.webpacker = function ({ app, anotherBase }) {
   var routeBase = '/v1/vuejs'
 
-  function setupSrc ({ base, zid }) {
+  function setupSrc ({ base, uid, zid }) {
     return new Promise((resolve, reject) => {
       var srcPath = path.join(process.cwd())
       var webpackBase = base
@@ -82,127 +134,19 @@ exports.webpacker = function ({ app }) {
           }
         })
       }
-
-      // preloadPackage([
-      //   'vue'
-      // ], { fs: mfs })
-
-      mfs.mkdirpSync(srcPath + '')
-      mfs.writeFileSync(srcPath + '/App.vue', `
-<template>
-  <div id="app">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'App',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
-}
-</script>
-
-<style lang="scss" scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-</style>
-`)
-
-      mfs.writeFileSync(srcPath + '/main.js', `
-/* global: Vue */
-import App from './App.vue'
-
-new Vue({
-  components: { App },
-  el: '#app',
-  template: '<App />'
-})
-
-`)
-
-      mfs.mkdirpSync(webpackBase + '/dist')
-      mfs.writeFileSync(webpackBase + '/dist/index.html', `
-<!DOCTYPE html>
-<html>
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>title</title>
-  <meta name="author" content="Wong Lok">
-  <meta name="description" content="Running WebPack inside Google Cloud Functions">
-  <meta name="keywords" content="fun fun, vuejs">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.1/vue-router.min.js"></script>
-
-  <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
-
-  <style type="text/css">
-    html, body {
-      margin: 0px;
-      padding: 0px;
-    }
-  </style>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!--refresher-->
-    <script>
-      (function () {
-        var config = {
-          apiKey: "AIzaSyBxYyXU4YdSBxk2Dn9UF12bFWRdSWQtm2Q",
-          authDomain: "loklok-zone.firebaseapp.com",
-          databaseURL: "https://loklok-zone.firebaseio.com",
-          projectId: "loklok-zone",
-          storageBucket: "loklok-zone.appspot.com",
-          messagingSenderId: "680362980709"
-        };
-        firebase.initializeApp(config);
-        var database = firebase.database();
-
-        var refresher = database.ref('/vuejs/${zid}/refresher');
-        var lastVal = false
-        refresher.on('value', function (snapshot) {
-          if (lastVal !== false) {
-            window.location.reload();
-          }
-          lastVal = snapshot.val()
-        });
-      }());
-    </script>
-    <script src="./build.js"></script>
-  </body>
-</html>
-`)
-
       compiler.inputFileSystem = mfs
       compiler.outputFileSystem = mfs
       compiler.resolvers.normal.fileSystem = mfs
       compiler.resolvers.context.fileSystem = mfs
 
-      resolve({ mfs, compiler })
+      getZoneFiles({ uid, zid }).then((zone) => {
+        console.log(zone)
+        return writeToMFS({ mfs, filesArr: transformToArray((zone && zone.files) || {}), srcPath, zid, webpackBase })
+      }).then(() => {
+        resolve({ mfs, compiler })
+        // resolve to compile
+      })
+    //
     })
   }
 
@@ -217,8 +161,8 @@ new Vue({
     })
   }
 
-  function processInfo ({ zid }) {
-    return setupSrc({ base: routeBase + '/' + zid, zid })
+  function processInfo ({ zid, uid }) {
+    return setupSrc({ base: routeBase + '/' + uid + '/' + zid, uid, zid })
       .then(({ compiler, mfs }) => {
         cache.set(zid, { mfs, state: 'compile' })
         return compileSrc({ compiler, mfs })
@@ -230,10 +174,12 @@ new Vue({
       })
   }
 
-  app.get(routeBase + '/:zid*', (req, res) => {
+  app.get(routeBase + '/:uid/:zid*', (req, res) => {
     var zid = req.params.zid
+    var uid = req.params.uid
+
     function sender ({ mfs }) {
-      if (req.path === routeBase + '/' + zid + '/dist/index.html') {
+      if (req.path === routeBase + '/' + uid + '/' + zid + '/dist/index.html') {
         res.set('html')
         try {
           res.send(mfs.readFileSync(req.path, 'utf8'))
@@ -250,7 +196,13 @@ new Vue({
     }
 
     var data = cache.get(zid)
-    if (data && data.state === 'ready') {
+    if (req.query && req.query.force === 'compile') {
+      processInfo({ zid, uid })
+        .then(({ mfs }) => {
+          sender({ mfs })
+          // res.json({ path: req.path, mfs })
+        })
+    } else if (data && data.state === 'ready') {
       var { mfs } = data
       sender({ mfs })
     } else if (data && data.state === 'compile') {
@@ -260,7 +212,7 @@ new Vue({
       }
       buzz.on('compile-ready-' + zid, func)
     } else {
-      processInfo({ zid: zid })
+      processInfo({ zid, uid })
         .then(({ mfs }) => {
           sender({ mfs })
           // res.json({ path: req.path, mfs })

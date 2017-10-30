@@ -1,6 +1,11 @@
 {
   "rules": {
-    ".read": "auth != null",
+    "vuejs": {
+      "$owner_id": {
+        ".read": "true",
+        ".write": "auth != null && $owner_id === auth.uid || auth != null && root.child('admin').hasChild(auth.uid)"
+      }
+    },
     ".write": "auth != null"
   }
 }

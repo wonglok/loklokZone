@@ -1,185 +1,24 @@
-[debug] [2017-10-29T22:40:53.674Z] ----------------------------------------------------------------------
-[debug] [2017-10-29T22:40:53.677Z] Command:       /Users/lok/.nvm/versions/node/v7.9.0/bin/node /Users/lok/.nvm/versions/node/v7.9.0/bin/firebase serve --only functions,hosting
-[debug] [2017-10-29T22:40:53.677Z] CLI Version:   3.13.1
-[debug] [2017-10-29T22:40:53.677Z] Platform:      darwin
-[debug] [2017-10-29T22:40:53.677Z] Node Version:  v7.9.0
-[debug] [2017-10-29T22:40:53.677Z] Time:          Mon Oct 30 2017 06:40:53 GMT+0800 (HKT)
-[debug] [2017-10-29T22:40:53.677Z] ----------------------------------------------------------------------
+[debug] [2017-10-30T02:26:37.991Z] ----------------------------------------------------------------------
+[debug] [2017-10-30T02:26:37.993Z] Command:       /Users/lok/.nvm/versions/node/v7.9.0/bin/node /Users/lok/.nvm/versions/node/v7.9.0/bin/firebase deploy --only functions
+[debug] [2017-10-30T02:26:37.994Z] CLI Version:   3.13.1
+[debug] [2017-10-30T02:26:37.994Z] Platform:      darwin
+[debug] [2017-10-30T02:26:37.994Z] Node Version:  v7.9.0
+[debug] [2017-10-30T02:26:37.994Z] Time:          Mon Oct 30 2017 10:26:37 GMT+0800 (HKT)
+[debug] [2017-10-30T02:26:37.994Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2017-10-29T22:40:53.692Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2017-10-29T22:40:53.692Z] > authorizing via signed-in user
-[debug] [2017-10-29T22:40:53.694Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2017-10-29T22:40:53.694Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/sGbwP0wnm03XWWLfDIozZqbF5WSEjy9Kwj30CsRKeZ4',
+[debug] [2017-10-30T02:26:38.005Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-30T02:26:38.005Z] > authorizing via signed-in user
+[debug] [2017-10-30T02:26:38.006Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-10-30T02:26:38.007Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/sGbwP0wnm03XWWLfDIozZqbF5WSEjy9Kwj30CsRKeZ4',
   client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Mon Oct 30 2017 06:40:53 GMT+0800 (HKT)
-[debug] [2017-10-29T22:40:53.799Z] <<< HTTP RESPONSE 200
-[debug] [2017-10-29T22:40:53.805Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/loklok-zone  
- Mon Oct 30 2017 06:40:53 GMT+0800 (HKT)
-[debug] [2017-10-29T22:40:55.082Z] <<< HTTP RESPONSE 200
-[debug] [2017-10-29T22:40:55.083Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/loklok-zone/tokens  
- Mon Oct 30 2017 06:40:55 GMT+0800 (HKT)
-[debug] [2017-10-29T22:40:55.865Z] <<< HTTP RESPONSE 200
-[info] 
-[info] === Serving from '/Volumes/Data/WONGLOK/WORK_IMPORTANT/WongLok/loklokZone'...
-[info] 
-[info] i  functions: Preparing to emulate functions.
-[debug] [2017-10-29T22:40:56.206Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/loklok-zone  
- Mon Oct 30 2017 06:40:56 GMT+0800 (HKT)
-[debug] [2017-10-29T22:40:56.207Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/loklok-zone/apiKeys  
- Mon Oct 30 2017 06:40:56 GMT+0800 (HKT)
-[debug] [2017-10-29T22:40:56.207Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/loklok-zone  
- Mon Oct 30 2017 06:40:56 GMT+0800 (HKT)
-[debug] [2017-10-29T22:40:57.299Z] <<< HTTP RESPONSE 200
-[debug] [2017-10-29T22:40:57.299Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/680362980709/clients/_:getWebAppConfig  
- Mon Oct 30 2017 06:40:57 GMT+0800 (HKT)
-[debug] [2017-10-29T22:40:57.349Z] <<< HTTP RESPONSE 200
-[debug] [2017-10-29T22:40:57.369Z] <<< HTTP RESPONSE 200
-[debug] [2017-10-29T22:40:58.323Z] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: dist
-[info] ✔  hosting: Local server: http://localhost:5000
-
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] ✔  functions: app: http://localhost:5001/loklok-zone/us-central1/app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js.map to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy3/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy/dist/index.html to local function app
-[info] [hosting] Rewriting /v1/vuejs/happy/dist/build.js to local function app
-[info] [hosting] Rewriting /favicon.ico to local function app
+ Mon Oct 30 2017 10:26:38 GMT+0800 (HKT)
+[debug] [2017-10-30T02:26:38.125Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-30T02:26:38.137Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/loklok-zone  
+ Mon Oct 30 2017 10:26:38 GMT+0800 (HKT)
+[debug] [2017-10-30T02:26:39.371Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-30T02:26:39.372Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/loklok-zone/tokens  
+ Mon Oct 30 2017 10:26:39 GMT+0800 (HKT)
+[debug] [2017-10-30T02:26:40.599Z] <<< HTTP RESPONSE 200
