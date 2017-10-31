@@ -9,7 +9,7 @@
         </div>
         <div v-if="currentRename !== file.name">
           <span class="file-name-display" @click="selectFile(file)" :class="{ highlight: highlight.path === file.path }">{{ file.name }}</span>
-          <button class="btn file-renamer" @click="currentRename = file.name">name</button>
+          <button class="btn file-renamer" @click="currentRename = file.name" v-if="!file.protected">name</button>
           <button class="btn file-remover" @click="removeFile(file.path)" v-if="!file.protected">x</button>
         </div>
       </div>

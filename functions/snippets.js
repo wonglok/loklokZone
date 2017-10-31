@@ -63,14 +63,13 @@ export default {
 }
 
 exports.html = function () {
-  return `
-<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
   <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>title</title>
+  <title>New Web</title>
   <meta name="author" content="Wong Lok">
   <meta name="description" content="Running WebPack inside Google Cloud Functions">
   <meta name="keywords" content="fun fun, vuejs">
@@ -79,6 +78,8 @@ exports.html = function () {
   <!--inject-auto-refresher-here-->
   <style type="text/css">
     html, body {
+      width: 100%;
+      height: 100%;
       margin: 0px;
       padding: 0px;
     }
@@ -88,11 +89,10 @@ exports.html = function () {
     <div id="app"></div>
     <script src="./build.js"></script>
   </body>
-</html>
-`
+</html>`
 }
 
-exports.refresher = function ({ zid }) {
+exports.refresher = function ({ uid, zid }) {
   return `
   <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
@@ -108,7 +108,7 @@ exports.refresher = function ({ zid }) {
       };
       firebase.initializeApp(config);
       var database = firebase.database();
-      var refresher = database.ref('/vuejs/${zid}/refresher');
+      var refresher = database.ref('/vuejs/${uid}/${zid}/refresher');
       var lastVal = false
       refresher.on('value', function (snapshot) {
         if (lastVal !== false) {

@@ -61,7 +61,6 @@ export default {
         },
         readOnly: true // false if this command should not apply in readOnly mode
       },
-
       {
         name: 'multicursor',
         bindKey: {win: 'Ctrl-D', mac: 'Command-D'},

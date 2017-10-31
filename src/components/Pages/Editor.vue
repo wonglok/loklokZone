@@ -1,25 +1,29 @@
 <template>
-  <div class="editor">
-    <div class="left-side">
-      <TreeFolder :files="files" :buttons="true" :highlight="current.file" @add="addFile" @remove="tryRemoveFile" @edit="editFile" @select="selectFile" />
+  <div>
+    <div class="menu">
+      Zone
+      <a :href="`//${getBase()}/v1/vuejs/${getUID()}/${getZID()}/dist/index.html`" target="_blank">Preview</a>
     </div>
-    <div class="right-side">
-      <ACE v-if="current.file.path" @save="saveFile" v-model="current.file.content" @init="editorInit()" :lang="getLang(current.file.path)" theme="chrome" width="100%" :height="ace.height"></ACE>
+    <div class="editor">
+      <div class="left-side">
+        <TreeFolder :files="files" :buttons="true" :highlight="current.file" @add="addFile" @remove="tryRemoveFile" @edit="editFile" @select="selectFile" />
+      </div>
+      <div class="right-side">
+        <ACE v-if="current.file.path" @save="saveFile" v-model="current.file.content" @init="editorInit()" :lang="getLang(current.file.path)" theme="chrome" width="100%" :height="ace.height"></ACE>
+      </div>
+      <div class="modal">
+        <Modal :show="modal.show"  @close="(v) => { modal.show = v }">
+          <div v-if="modal.mode === 'remove-file'">
+            <h1>Remove </h1>
+            <h2>{{ modal.data.path }}</h2>
+            <button @click="removeFile(modal.data.path); modal.show = false">Confirm Removal</button>
+            <br />
+            content: <br />
+            <pre>{{ modal.data.content }}</pre>
+          </div>
+        </Modal>
+      </div>
     </div>
-    <div class="modal">
-      <Modal :show="modal.show"  @close="(v) => { modal.show = v }">
-        <div v-if="modal.mode === 'remove-file'">
-          <h1>Remove </h1>
-          <h2>{{ modal.data.path }}</h2>
-          <button @click="removeFile(modal.data.path); modal.show = false">Confirm Removal</button>
-          <br />
-          content: <br />
-          <pre>{{ modal.data.content }}</pre>
-        </div>
-      </Modal>
-    </div>
-
-    <!-- <pre>{{ current.file }}</pre> -->
   </div>
 </template>
 
@@ -38,8 +42,10 @@ export default {
   },
   data () {
     return {
+      uid: {},
+      zid: {},
       ace: {
-        height: window.innerHeight
+        height: window.innerHeight - 50
       },
       modal: {
         show: false,
@@ -91,11 +97,25 @@ export default {
         content: snippets.Counter()
       }
     ]).then((v) => {
+      window.v = v
       this.files = v
       this.current.file = v[0]
     })
   },
   methods: {
+    getBase () {
+      if (window.location.host === 'localhost:8080') {
+        return 'localhost:5000'
+      } else {
+        return 'localhost:8080'
+      }
+    },
+    getZID () {
+      return this.$route.params.zid || this.zid
+    },
+    getUID () {
+      return this.$route.params.uid || this.uid
+    },
     getLang (path) {
       var ans = 'html'
       try {
@@ -169,9 +189,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$height: calc(100% - 50px);
+
 .editor{
   width: 100%;
-  height: 100%;
+  height: $height;
   position: relative;
 }
 .left-side{
@@ -179,17 +201,26 @@ export default {
   top: 0px;
   left: 0px;
   width: 250px;
-  height: 100%;
+  height: $height;
 }
 .right-side{
   position: absolute;
   right: 0px;
   top: 0px;
   width: calc(100% - 250px);
-  height: 100%;
+  height: $height;
 }
 .modal{
   position: fixed;
   z-index: 100000000;
 }
+
+.menu{
+  height: 50px;
+  box-sizing: border-box;
+  border-bottom: #676767 solid 3px;
+}
+
+
+
 </style>

@@ -62,20 +62,30 @@ function getZoneFiles ({ uid, zid }) {
   })
 }
 
-function writeToMFS ({ mfs, filesArr, srcPath, zid, webpackBase }) {
+function writeToMFS ({ mfs, filesArr, srcPath, uid, zid, webpackBase }) {
+  // console.log('*****FILES*****', filesArr)
   filesArr = filesArr || []
   var sourcesWithoutHTML = filesArr.filter((file) => {
     return file.path.indexOf('index.html') === -1
   })
 
   mfs.mkdirpSync(srcPath)
-  mfs.mkdirpSync(srcPath + '/Pages')
-  mfs.writeFileSync(srcPath + '/Pages/App.vue', snippets.AppVue())
+  mfs.mkdirpSync(srcPath + '/pages')
+  filesArr.map((src) => {
+    var ans = src.path.split('/')
+    ans.pop()
+    ans = ans.join('/')
+    return ans
+  }).forEach((url) => {
+    mfs.mkdirpSync(webpackBase + url)
+  })
+
+  mfs.writeFileSync(srcPath + '/pages/App.vue', snippets.AppVue())
   mfs.writeFileSync(srcPath + '/main.js', snippets.entryJS())
 
   sourcesWithoutHTML.forEach((src) => {
-    console.log(src)
     try {
+      console.log(src)
       mfs.writeFileSync(srcPath + src.path, src.content)
     } catch (e) {
       console.error(e)
@@ -87,9 +97,10 @@ function writeToMFS ({ mfs, filesArr, srcPath, zid, webpackBase }) {
   var sourceOfTHML = filesArr.filter((file) => {
     return file.path.indexOf('index.html') !== -1
   })[0]
-  sourceOfTHML = sourceOfTHML || snippets.html()
+  // console.log('*****source of html*******', sourceOfTHML)
+  sourceOfTHML = (sourceOfTHML && sourceOfTHML.content + '') || snippets.html()
 
-  var refresher = snippets.refresher({ zid })
+  var refresher = snippets.refresher({ uid, zid })
   mfs.writeFileSync(webpackBase + '/dist/index.html', sourceOfTHML.replace('<!--inject-auto-refresher-here-->', refresher))
 }
 
@@ -143,7 +154,7 @@ exports.webpacker = function ({ app, anotherBase }) {
 
       getZoneFiles({ uid, zid }).then((zone) => {
         console.log(zone)
-        return writeToMFS({ mfs, filesArr: transformToArray((zone && zone.files) || {}), srcPath, zid, webpackBase })
+        return writeToMFS({ mfs, filesArr: transformToArray((zone && zone.files) || {}), srcPath, uid, zid, webpackBase })
       }).then(() => {
         resolve({ mfs, compiler })
         // resolve to compile
