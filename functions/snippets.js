@@ -193,11 +193,12 @@ exports.refresher = function ({ uid, zid }) {
       };
       firebase.initializeApp(config);
       var database = firebase.database();
-      var refresher = database.ref('/vuejs/${uid}/${zid}/refresher');
+      var refresher = database.ref().child('/vuejs').child('${uid}').child('${zid}').child('refresher');
       var lastVal = false
       refresher.on('value', function (snapshot) {
         if (lastVal !== false) {
-          window.location.search = ('?force=compile&rand=' + Math.random());
+          windiow.location.reload()
+          // window.location.search = ('?force=compile&rand=' + Math.random());
         }
         lastVal = snapshot.val()
       });

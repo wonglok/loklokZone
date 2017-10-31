@@ -49,6 +49,13 @@ exports.clearCacheOnSave = functions.database.ref('/vuejs/{uid}/{zid}/files').on
   var uid = event.params.uid
   console.log('***** Cleraing Cache at', zid)
   cache.set(zid + uid, false)
+
+  processInfo({ zid, uid, routeBase: '/v1/vuejs' })
+    .then(({ mfs }) => {
+      console.log('setting refresher')
+      admin.database().ref('/vuejs').child(uid).child(zid).child('refresher').set(Math.random())
+    })
+
   // return event.data.ref.parent.child('refresher').set(Math.random())
   return event.data.ref
 })
@@ -116,77 +123,77 @@ function transformToArray (srcObj) {
   return bucket
 }
 
+function setupSrc ({ base, uid, zid }) {
+  return new Promise((resolve, reject) => {
+    var srcPath = path.join(process.cwd())
+    var webpackBase = base
+
+    var wcfg = webpackConfig({ entryBase: srcPath, outputBase: webpackBase, minify: true })
+    var compiler = webpack(wcfg)
+    var mfs = new MemoryFileSystem()
+
+    const statOrig = mfs.stat.bind(mfs)
+    const readFileOrig = mfs.readFile.bind(mfs)
+    mfs.stat = function (_path, cb) {
+      statOrig(_path, function (err, result) {
+        if (err) {
+          return fs.stat(_path, cb)
+        } else {
+          return cb(err, result)
+        }
+      })
+    }
+    mfs.readFile = function (path, cb) {
+      readFileOrig(path, function (err, result) {
+        if (err) {
+          return fs.readFile(path, cb)
+        } else {
+          return cb(err, result)
+        }
+      })
+    }
+    compiler.inputFileSystem = mfs
+    compiler.outputFileSystem = mfs
+    compiler.resolvers.normal.fileSystem = mfs
+    compiler.resolvers.context.fileSystem = mfs
+
+    getZoneFiles({ uid, zid }).then((zone) => {
+      console.log(zone)
+      return writeToMFS({ mfs, filesArr: transformToArray((zone && zone.files) || {}), srcPath, uid, zid, webpackBase })
+    }).then(() => {
+      resolve({ mfs, compiler })
+      // resolve to compile
+    })
+  //
+  })
+}
+
+function compileSrc ({ compiler, mfs }) {
+  return new Promise((resolve, reject) => {
+    compiler.run((err, stats) => {
+      if (err) {
+        reject(err)
+      }
+      resolve({ mfs })
+    })
+  })
+}
+
+function processInfo ({ zid, uid, routeBase }) {
+  return setupSrc({ base: routeBase + '/' + uid + '/' + zid, uid, zid })
+    .then(({ compiler, mfs }) => {
+      cache.set(zid + uid, { mfs, state: 'compile' })
+      return compileSrc({ compiler, mfs })
+    })
+    .then(({ mfs }) => {
+      cache.set(zid + uid, { mfs, state: 'ready' })
+      buzz.trigger('compile-ready-' + zid, { mfs, state: 'ready' })
+      return { mfs }
+    })
+}
+
 exports.webpacker = function ({ app, anotherBase }) {
   var routeBase = '/v1/vuejs'
-
-  function setupSrc ({ base, uid, zid }) {
-    return new Promise((resolve, reject) => {
-      var srcPath = path.join(process.cwd())
-      var webpackBase = base
-
-      var wcfg = webpackConfig({ entryBase: srcPath, outputBase: webpackBase, minify: true })
-      var compiler = webpack(wcfg)
-      var mfs = new MemoryFileSystem()
-
-      const statOrig = mfs.stat.bind(mfs)
-      const readFileOrig = mfs.readFile.bind(mfs)
-      mfs.stat = function (_path, cb) {
-        statOrig(_path, function (err, result) {
-          if (err) {
-            return fs.stat(_path, cb)
-          } else {
-            return cb(err, result)
-          }
-        })
-      }
-      mfs.readFile = function (path, cb) {
-        readFileOrig(path, function (err, result) {
-          if (err) {
-            return fs.readFile(path, cb)
-          } else {
-            return cb(err, result)
-          }
-        })
-      }
-      compiler.inputFileSystem = mfs
-      compiler.outputFileSystem = mfs
-      compiler.resolvers.normal.fileSystem = mfs
-      compiler.resolvers.context.fileSystem = mfs
-
-      getZoneFiles({ uid, zid }).then((zone) => {
-        console.log(zone)
-        return writeToMFS({ mfs, filesArr: transformToArray((zone && zone.files) || {}), srcPath, uid, zid, webpackBase })
-      }).then(() => {
-        resolve({ mfs, compiler })
-        // resolve to compile
-      })
-    //
-    })
-  }
-
-  function compileSrc ({ compiler, mfs }) {
-    return new Promise((resolve, reject) => {
-      compiler.run((err, stats) => {
-        if (err) {
-          reject(err)
-        }
-        resolve({ mfs })
-      })
-    })
-  }
-
-  function processInfo ({ zid, uid }) {
-    return setupSrc({ base: routeBase + '/' + uid + '/' + zid, uid, zid })
-      .then(({ compiler, mfs }) => {
-        cache.set(zid + uid, { mfs, state: 'compile' })
-        return compileSrc({ compiler, mfs })
-      })
-      .then(({ mfs }) => {
-        cache.set(zid + uid, { mfs, state: 'ready' })
-        buzz.trigger('compile-ready-' + zid, { mfs, state: 'ready' })
-        return { mfs }
-      })
-  }
 
   app.get(routeBase + '/:uid/:zid*', (req, res) => {
     var zid = req.params.zid
@@ -213,7 +220,7 @@ exports.webpacker = function ({ app, anotherBase }) {
 
     var data = cache.get(zid + uid)
     if (req.query && req.query.force === 'compile') {
-      processInfo({ zid, uid })
+      processInfo({ zid, uid, routeBase })
         .then(({ mfs }) => {
           sender({ mfs })
           // res.json({ path: req.path, mfs })
@@ -228,7 +235,7 @@ exports.webpacker = function ({ app, anotherBase }) {
       }
       buzz.on('compile-ready-' + zid, func)
     } else {
-      processInfo({ zid, uid })
+      processInfo({ zid, uid, routeBase })
         .then(({ mfs }) => {
           sender({ mfs })
           // res.json({ path: req.path, mfs })

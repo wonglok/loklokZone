@@ -64,17 +64,17 @@ export default {
             content: snippets.AppVue()
           },
           {
-            protected: true,
+            protected: false,
             path: '/pages/Hello.vue',
             content: snippets.Hello()
           },
           {
-            protected: true,
+            protected: false,
             path: '/pages/About.vue',
             content: snippets.About()
           },
           {
-            protected: true,
+            protected: false,
             path: '/parts/Fun.vue',
             content: snippets.Fun()
           }
