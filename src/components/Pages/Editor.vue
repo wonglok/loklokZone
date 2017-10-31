@@ -236,7 +236,7 @@ export default {
       }
       delete newData['.key']
       ref.child('files').child(this.current.file['.key']).set(newData).then(() => {
-        // ref.child('refresher').set(Math.random())
+        ref.child('refresher').set(Math.random())
       })
     }
   }

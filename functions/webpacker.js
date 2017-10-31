@@ -49,13 +49,7 @@ exports.clearCacheOnSave = functions.database.ref('/vuejs/{uid}/{zid}/files').on
   var uid = event.params.uid
   console.log('***** Cleraing Cache at', zid)
   cache.set(zid + uid, false)
-
-  // return event.data.ref.parent.child('refresher').set(Math.random())
-  return processInfo({ zid, uid, routeBase: '/v1/vuejs' })
-    .then(({ mfs }) => {
-      console.log('setting refresher')
-      return admin.database().ref('/vuejs').child(uid).child(zid).child('refresher').set(Math.random())
-    })
+  return event.data.ref
 })
 
 function getZoneFiles ({ uid, zid }) {
@@ -91,7 +85,7 @@ function writeToMFS ({ mfs, filesArr, srcPath, uid, zid, webpackBase }) {
 
   sourcesWithoutHTML.forEach((src) => {
     try {
-      console.log(src)
+      // console.log(src)
       mfs.writeFileSync(srcPath + src.path, src.content)
     } catch (e) {
       console.error(e)
@@ -156,7 +150,7 @@ function setupSrc ({ base, uid, zid }) {
     compiler.resolvers.context.fileSystem = mfs
 
     getZoneFiles({ uid, zid }).then((zone) => {
-      console.log(zone)
+      // console.log(zone)
       return writeToMFS({ mfs, filesArr: transformToArray((zone && zone.files) || {}), srcPath, uid, zid, webpackBase })
     }).then(() => {
       resolve({ mfs, compiler })
