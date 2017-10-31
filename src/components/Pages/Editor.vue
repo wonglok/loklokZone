@@ -1,15 +1,20 @@
 <template>
   <div>
     <div class="menu">
-      Zone
+      <router-link to="/dashboard">Zone</router-link>
       <a :href="`//${getBase()}/v1/vuejs/${getUID()}/${getZID()}/dist/index.html`" target="_blank">Preview</a>
     </div>
-    <div class="editor">
+    <div class="loader" :class="{ loading: loading }"></div>
+    <div class="editor" v-if="is404">
+      <h1>Zone Not Found....</h1>
+      <h2><router-link to="/dashboard">Dashboard</router-link></h2>
+    </div>
+    <div class="editor" v-if="!is404">
       <div class="left-side">
-        <TreeFolder :files="files" :buttons="true" :highlight="current.file" @add="addFile" @remove="tryRemoveFile" @edit="editFile" @select="selectFile" />
+        <TreeFolder :files="files" :buttons="true" :highlight="current.file" @add="addFile" @remove="tryRemoveFile" @edit="renameFile" @select="selectFile" />
       </div>
       <div class="right-side">
-        <ACE v-if="current.file.path" @save="saveFile" v-model="current.file.content" @init="editorInit()" :lang="getLang(current.file.path)" theme="chrome" width="100%" :height="ace.height"></ACE>
+        <ACE v-if="current.file.path" @save="saveFiles" v-model="current.file.content" @input="(value) => { this.current.file.content = value }" @init="editorInit()" :lang="getLang(current.file.path)" theme="chrome" width="100%" :height="ace.height"></ACE>
       </div>
       <div class="modal">
         <Modal :show="modal.show"  @close="(v) => { modal.show = v }">
@@ -32,7 +37,8 @@ import TreeFolder from '@/components/Parts/TreeFolder.vue'
 import Modal from '@/components/Parts/Modal.vue'
 import ACE from '@/components/Parts/ACE.vue'
 // import ACE from 'vue2-ace-editor'
-import snippets from '@/../functions/snippets.js'
+// import snippets from '@/../functions/snippets.js'
+import { appState, readyRT, api } from '@/sys'
 
 export default {
   components: {
@@ -42,6 +48,9 @@ export default {
   },
   data () {
     return {
+      loading: false,
+      appState,
+      is404: false,
       uid: {},
       zid: {},
       ace: {
@@ -75,34 +84,37 @@ export default {
     }
   },
   mounted () {
-    Promise.resolve([
-      {
-        protected: true,
-        path: '/index.html',
-        content: snippets.html()
-      },
-      {
-        protected: true,
-        path: '/main.js',
-        content: snippets.entryJS()
-      },
-      {
-        protected: true,
-        path: '/pages/App.vue',
-        content: snippets.AppVue()
-      },
-      {
-        protected: false,
-        path: '/parts/Counter.vue',
-        content: snippets.Counter()
-      }
-    ]).then((v) => {
-      window.v = v
-      this.files = v
-      this.current.file = v[0]
-    })
+    this.prepZone()
   },
   methods: {
+    prepZone () {
+      this.loading = true
+      readyRT().then(() => {
+        api.db.ref().child('/vuejs').child(this.getUID()).child(this.getZID()).child('files').on('value', (snap) => {
+          var raw = snap.val()
+          if (raw) {
+            var result = this.transformToArray(raw)
+            if (!this.files) {
+              this.current.file = result[0]
+            }
+            this.files = result
+          } else {
+            this.is404 = true
+          }
+          this.loading = false
+        })
+      })
+    },
+    transformToArray (srcObj) {
+      var keyArr = Object.keys(srcObj)
+      var bucket = []
+      for (var i = 0; i < keyArr.length; i++) {
+        var obj = srcObj[keyArr[i]]
+        obj['.key'] = keyArr[i]
+        bucket.push(obj)
+      }
+      return bucket
+    },
     getBase () {
       if (window.location.host === 'localhost:8080') {
         return 'localhost:5000'
@@ -167,13 +179,14 @@ export default {
         this.files.splice(index, 1)
       }
     },
-    editFile (newFile) {
+    renameFile (newFile) {
       console.log(newFile)
       var currentFile = this.files.filter((eFile) => {
         return eFile.path === newFile.path
       })[0]
       currentFile.name = newFile.name
       currentFile.path = currentFile.path.replace(newFile.oldFileName, newFile.name)
+      this.saveFiles()
     },
     selectFile (file) {
       console.log(file)
@@ -181,8 +194,28 @@ export default {
         return eFile.path === file.path
       })[0]
     },
-    saveFile () {
+    saveFiles () {
+      console.log(this.current.file)
 
+      var ref = api.db.ref().child('/vuejs').child(this.getUID()).child(this.getZID())
+
+      // ref.child('files').set(this.files.map((item) => {
+      //   var newItem = {
+      //     ...item
+      //   }
+      //   delete newItem['.key']
+      //   return newItem
+      // })).then(() => {
+      //   ref.child('refresher').set(Math.random())
+      // })
+
+      var newData = {
+        ...this.current.file
+      }
+      delete newData['.key']
+      ref.child('files').child(this.current.file['.key']).set(newData).then(() => {
+        ref.child('refresher').set(Math.random())
+      })
     }
   }
 }
@@ -216,11 +249,30 @@ $height: calc(100% - 50px);
 }
 
 .menu{
-  height: 50px;
+  height: 47px;
   box-sizing: border-box;
-  border-bottom: #676767 solid 3px;
+  // border-bottom: #676767 solid 3px;
 }
 
+@keyframes simsim {
+  0% {
+    background-position: 0% 0%;
+  }
+  50%{
+    background-position: 100% 100%;
+  }
+  100%{
+    background-position: 0% 0%;
+  }
+}
 
-
+.loader{
+  height: 3px;
+  background: linear-gradient(90deg, lime, cyan, #ff00ff);
+  background-size: 250% 250%;
+  transition: background-position 1s;
+  &.loading{
+    animation: simsim 3s ease-in-out 0s infinite normal both;
+  }
+}
 </style>
