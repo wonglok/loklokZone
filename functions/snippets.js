@@ -201,11 +201,11 @@ exports.refresher = function ({ uid, zid }) {
         }
         lastVal = snapshot.val()
       });
-      window.onload = function () {
-        var url = window.location.href;
-        url = url.replace(window.location.search, '');
-        window.location.replace(url);
-      };
+      // window.onload = function () {
+      //   var url = window.location.href;
+      //   url = url.replace(window.location.search, '');
+      //   window.location.replace(url);
+      // };
     }());
   </script>
 `
