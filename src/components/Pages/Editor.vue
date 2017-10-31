@@ -107,7 +107,7 @@ export default {
       if (window.location.host === 'localhost:8080') {
         return 'localhost:5000'
       } else {
-        return 'localhost:8080'
+        return window.location.host
       }
     },
     getZID () {
