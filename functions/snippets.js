@@ -1,7 +1,6 @@
 exports.entryJS = function () {
-  return `
-/* global: Vue */
-import App from './App.vue'
+  return `/* global: Vue */
+import App from './pages/App.vue'
 
 new Vue({
   components: { App },
@@ -12,8 +11,7 @@ new Vue({
 }
 
 exports.AppVue = function () {
-  return `
-<template>
+  return `<template>
   <div id="app">
     <h1>{{ msg }}</h1>
   </div>
@@ -36,6 +34,30 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+</style>
+`
+}
+
+exports.Counter = function () {
+  return `<template>
+  <div>
+    <h1>{{ counter }}</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App',
+  data () {
+    return {
+      counter: 0
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+
 </style>
 `
 }

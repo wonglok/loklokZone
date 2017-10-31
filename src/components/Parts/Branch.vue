@@ -5,25 +5,28 @@
       <div :key="fkey" v-for="(file, fkey) in detail" class="filename">
         <div v-if="currentRename === file.name" >
           <input autofocus class="new-file-name" v-model="file.name" @keydown.enter="editFile(file)" @keydown.esc="currentRename = false" />
-          <button class="file-renamer-cancel" @click="currentRename = false">cancel</button>
+          <button class="btn file-renamer-cancel" @click="currentRename = false">cancel</button>
         </div>
         <div v-if="currentRename !== file.name">
-          <span>{{ file.name }}</span>
-          <button class="file-renamer" @click="currentRename = file.name">edit</button>
-          <button class="file-remover" @click="removeFile(file.path)">x</button>
+          <span class="file-name-display" @click="selectFile(file)" :class="{ highlight: highlight.path === file.path }">{{ file.name }}</span>
+          <button class="btn file-renamer" @click="currentRename = file.name">name</button>
+          <button class="btn file-remover" @click="removeFile(file.path)" v-if="!file.protected">x</button>
         </div>
       </div>
+      <div class="top-padding"></div>
     </div>
     <div v-if="branch.indexOf('/') === 0">
       <div class="foldername">
         {{ branch }}
-        <button class="file-adder" @click="addFileAt(detail.folder, 'new.js')">+ file</button>
-        <button class="file-adder" @click="addFileAt(detail.folder, '/folder/new.js')">+ folder</button>
+        <button class="btn file-adder" @click="addFileAt(detail.folder, 'new.js')">+ file</button>
+        <button class="btn folder-adder" @click="addFileAt(detail.folder, '/folder/new.js')">+ folder</button>
         <div class="pad" v-if="showAdderAt(detail.folder)">
-          <input class="new-file-name" v-model="oldFileName" @keyup.enter="addFile()" /> <button class="newfile-btn" @click="addFile()">add</button> <button class="newfile-btn-close" @click="cancelAdd()">cancel</button>
+          <input class="new-file-name" v-model="currentFileName" @keyup.enter="addFile()" /> <button class="btn newfile-btn" @click="addFile()">add</button>
+          <button class="btn newfile-btn-close" @click="cancelAdd()">cancel</button>
         </div>
       </div>
-      <Branch :buttons="buttons" :tree="detail" :parent="branch" @add="(v) => { $emit('add', v) }" @remove="(v) => { $emit('remove', v) }" @edit="(v) => { $emit('edit', v) }" />
+      <Branch :buttons="buttons" :tree="detail" :highlight="highlight" @add="(v) => { $emit('add', v) }" @remove="(v) => { $emit('remove', v) }" @edit="(v) => { $emit('edit', v) }" @select="(v) => { $emit('select', v) }" />
+
     </div>
   </div>
 </div>
@@ -36,11 +39,18 @@ export default {
   data () {
     return {
       currentRename: false,
-      oldFileName: '',
-      currentNewFile: false
+      currentFileName: '',
+      currentNewFolder: false
     }
   },
   props: {
+    highlight: {
+      default () {
+        return {
+          path: ''
+        }
+      }
+    },
     buttons: { default: true },
     level: { default: 0 },
     tree: {}
@@ -57,25 +67,25 @@ export default {
       if (folder === '/') {
         addon = ''
       }
-      return this.currentNewFile === folder + addon
+      return this.currentNewFolder === folder + addon
     },
     addFileAt (folder, init) {
       var addon = '/'
       if (folder === '/') {
         addon = ''
       }
-      this.oldFileName = init || ''
-      this.currentNewFile = folder + addon
+      this.currentFileName = init || ''
+      this.currentNewFolder = folder + addon
     },
     addFile () {
-      if (this.oldFileName.indexOf('/') === 0) {
-        this.oldFileName = this.oldFileName.replace('/', '')
+      if (this.currentFileName.indexOf('/') === 0) {
+        this.currentFileName = this.currentFileName.replace('/', '')
       }
-      this.$emit('add', this.currentNewFile + this.oldFileName)
-      this.currentNewFile = false
+      this.$emit('add', this.currentNewFolder + this.currentFileName)
+      this.currentNewFolder = false
     },
     cancelAdd () {
-      this.currentNewFile = false
+      this.currentNewFolder = false
     },
     removeFile (path) {
       this.$emit('remove', path)
@@ -89,6 +99,10 @@ export default {
         oldFileName: this.currentRename
       })
       this.currentRename = false
+    },
+    selectFile (file) {
+      this.currentSelect = file.path
+      this.$emit('select', file)
     }
   }
 }
@@ -113,19 +127,30 @@ export default {
 .filename:hover .file-remover{
   display: inline-block;
 }
-.file-adder{
-  background-color: lime;
-  color:black;
-
+.btn{
   border: red solid 0px;
 	border-radius:3px;
 	cursor:pointer;
 	font-weight:bold;
 	padding: 4px 10px;
 	text-decoration:none;
+}
+.file-adder{
+  background-color: lime;
+  color:black;
+
+  display: none;
+}
+.folder-adder{
+  background-color: greenyellow;
+  color:black;
+
   display: none;
 }
 .foldername:hover .file-adder{
+  display: inline-block;
+}
+.foldername:hover .folder-adder{
   display: inline-block;
 }
 
@@ -133,12 +158,6 @@ export default {
   background-color: cyan;
   color:black;
 
-  border: red solid 0px;
-	border-radius:3px;
-	cursor:pointer;
-	font-weight:bold;
-	padding: 4px 10px;
-	text-decoration:none;
   display: none;
 }
 .filename:hover .file-renamer{
@@ -148,36 +167,15 @@ export default {
 .newfile-btn{
   background-color: lime;
   color:black;
-
-  border: red solid 0px;
-	border-radius:3px;
-	cursor:pointer;
-	font-weight:bold;
-	padding: 4px 10px;
-	text-decoration:none;
 }
 .newfile-btn-close{
   background-color: silver;
   color:black;
-
-  border: red solid 0px;
-	border-radius:3px;
-	cursor:pointer;
-	font-weight:bold;
-	padding: 4px 10px;
-	text-decoration:none;
 }
 
 .file-renamer-cancel{
   background-color: silver;
   color:black;
-
-  border: red solid 0px;
-	border-radius:3px;
-	cursor:pointer;
-	font-weight:bold;
-	padding: 4px 10px;
-	text-decoration:none;
 }
 
 .new-file-name {
@@ -193,4 +191,17 @@ export default {
 .new-file-name:focus {
   outline: none;
 }
+.file-name-display{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.top-padding{
+  height: 15px;
+}
+
+.highlight{
+  color: red;
+}
+
 </style>

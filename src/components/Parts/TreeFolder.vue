@@ -1,10 +1,10 @@
 <template>
 <div>
   <div>
-    <Branch :buttons="buttons" :tree="tree" @add="(v) => { $emit('add', v) }" @remove="(v) => { $emit('remove', v) }" @edit="(v) => { $emit('edit', v) }" />
+    <Branch :buttons="buttons" :highlight="highlight" :tree="tree" @add="(v) => { $emit('add', v) }" @remove="(v) => { $emit('remove', v) }" @edit="(v) => { $emit('edit', v) }" @select="(v) => { $emit('select', v) }" />
   </div>
-  <pre>{{ tree }}</pre>
-  <pre>{{ levels }}</pre>
+  <!-- <pre>{{ tree }}</pre>
+  <pre>{{ levels }}</pre> -->
 </div>
 </template>
 
@@ -15,6 +15,13 @@ export default {
     Branch
   },
   props: {
+    highlight: {
+      default () {
+        return {
+          path: ''
+        }
+      }
+    },
     buttons: { default: true },
     files: {}
   },

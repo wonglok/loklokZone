@@ -69,7 +69,8 @@ function writeToMFS ({ mfs, filesArr, srcPath, zid, webpackBase }) {
   })
 
   mfs.mkdirpSync(srcPath)
-  mfs.writeFileSync(srcPath + '/App.vue', snippets.AppVue())
+  mfs.mkdirpSync(srcPath + '/Pages')
+  mfs.writeFileSync(srcPath + '/Pages/App.vue', snippets.AppVue())
   mfs.writeFileSync(srcPath + '/main.js', snippets.entryJS())
 
   sourcesWithoutHTML.forEach((src) => {
