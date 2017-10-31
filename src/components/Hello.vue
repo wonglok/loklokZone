@@ -10,7 +10,7 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to lok\'s coding zone.'
+      msg: 'Welcome to Lok\'s coding zone.'
     }
   }
 }
