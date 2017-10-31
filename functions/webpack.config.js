@@ -42,7 +42,8 @@ module.exports = function ({ rootBase, entryBase, outputBase, minify }) {
     },
     resolve: {
       alias: {
-        'vue$': 'vue/dist/vue.esm.js'
+        'vue$': 'vue/dist/vue.esm.js',
+        '@': entryBase
       }
     },
     devServer: {

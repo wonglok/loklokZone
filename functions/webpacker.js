@@ -78,7 +78,7 @@ function writeToMFS ({ mfs, filesArr, srcPath, uid, zid, webpackBase }) {
     ans = ans.join('/')
     return ans
   }).forEach((url) => {
-    mfs.mkdirpSync(webpackBase + url)
+    mfs.mkdirpSync(srcPath + url)
   })
 
   mfs.writeFileSync(srcPath + '/pages/App.vue', snippets.AppVue())
@@ -193,7 +193,9 @@ exports.webpacker = function ({ app, anotherBase }) {
     var uid = req.params.uid
 
     function sender ({ mfs }) {
-      if (req.path === routeBase + '/' + uid + '/' + zid + '/dist/index.html') {
+      if (req.query.mfs === 'show') {
+        res.send(mfs)
+      } else if (req.path === routeBase + '/' + uid + '/' + zid + '/dist/index.html') {
         res.set('html')
         try {
           res.send(mfs.readFileSync(req.path, 'utf8'))

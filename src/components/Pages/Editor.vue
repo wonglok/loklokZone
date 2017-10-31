@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="menu">
-      <router-link to="/dashboard">Zone</router-link>
+      <router-link to="/dashboard">Dashboard</router-link>
       <a :href="`//${getBase()}/v1/vuejs/${getUID()}/${getZID()}/dist/index.html`" target="_blank">Preview</a>
+      <input v-model="current.zoneName" @change="saveTitle()" @keyup.enter="saveTitle()" />
     </div>
     <div class="loader" :class="{ loading: loading }"></div>
     <div class="editor" v-if="is404">
@@ -62,6 +63,7 @@ export default {
         data: {}
       },
       current: {
+        zoneName: '',
         file: {}
       },
       files: false
@@ -87,10 +89,16 @@ export default {
     this.prepZone()
   },
   methods: {
+    saveTitle () {
+      this.getZoneRef().child('name').set(this.current.zoneName)
+    },
     prepZone () {
       this.loading = true
       readyRT().then(() => {
-        api.db.ref().child('/vuejs').child(this.getUID()).child(this.getZID()).child('files').on('value', (snap) => {
+        this.getZoneRef().child('name').on('value', (snap) => {
+          this.current.zoneName = snap.val()
+        })
+        this.getZoneRef().child('files').on('value', (snap) => {
           var raw = snap.val()
           if (raw) {
             var result = this.transformToArray(raw)
@@ -200,6 +208,7 @@ export default {
     },
     selectFile (file) {
       console.log(file)
+      this.saveFiles()
       this.current.file = this.files.filter((eFile) => {
         return eFile.path === file.path
       })[0]

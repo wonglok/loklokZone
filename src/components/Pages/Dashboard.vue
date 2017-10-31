@@ -26,25 +26,27 @@ export default {
   },
   mounted () {
     readyRT().then(() => {
-      api.db.ref().child('/vuejs').child(this.uid).on('value', (snap) => {
+      api.db.ref().child('/vuejs').child(this.uid).limitToLast(100).on('value', (snap) => {
         this.zones = snap.val()
       })
     })
   },
   methods: {
     removeZone ({ zid }) {
+      if (!window.confirm('RemoveZone?')) { return }
       api.db.ref().child('/vuejs').child(this.uid).child(zid).remove()
     },
     createZone () {
       var ref = api.db.ref().child('/vuejs').child(this.uid)
       var newKey = ref.push().key
+      var title = window.prompt('What\'s the name of the new Zone?') || newKey
       ref.child(newKey).set({
-        name: newKey,
+        name: title,
         files: [
           {
             protected: true,
             path: '/index.html',
-            content: snippets.html()
+            content: snippets.html({ author: appState.user.displayName, title })
           },
           {
             protected: true,
@@ -53,13 +55,28 @@ export default {
           },
           {
             protected: true,
+            path: '/routes.js',
+            content: snippets.routerJS()
+          },
+          {
+            protected: true,
             path: '/pages/App.vue',
             content: snippets.AppVue()
           },
           {
-            protected: false,
-            path: '/parts/Counter.vue',
-            content: snippets.Counter()
+            protected: true,
+            path: '/pages/Hello.vue',
+            content: snippets.Hello()
+          },
+          {
+            protected: true,
+            path: '/pages/About.vue',
+            content: snippets.About()
+          },
+          {
+            protected: true,
+            path: '/parts/Fun.vue',
+            content: snippets.Fun()
           }
         ],
         refresher: Math.random()
