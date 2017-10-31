@@ -49,7 +49,8 @@ exports.clearCacheOnSave = functions.database.ref('/vuejs/{uid}/{zid}/files').on
   var uid = event.params.uid
   console.log('***** Cleraing Cache at', zid)
   cache.set(zid + uid, false)
-  return event.data.ref.parent.child('refresher').set(Math.random())
+  // return event.data.ref.parent.child('refresher').set(Math.random())
+  return event.data.ref
 })
 
 function getZoneFiles ({ uid, zid }) {

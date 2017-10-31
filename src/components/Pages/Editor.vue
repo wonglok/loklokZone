@@ -159,6 +159,13 @@ export default {
         path,
         content: ''
       })
+      this.getZoneRef().child('files').set(this.files.map((item) => {
+        var newItem = {
+          ...item
+        }
+        delete newItem['.key']
+        return newItem
+      }))
     },
     tryRemoveFile (path) {
       this.modal.mode = 'remove-file'
@@ -171,17 +178,20 @@ export default {
       this.modal.data.content = this.modal.data.file.content
     },
     removeFile (path) {
-      var file = this.files.filter((file) => {
+      var file = this.current.file = this.files.filter((file) => {
         return file.path === path
       })[0]
       var index = this.files.indexOf(file)
       if (index !== -1) {
         this.files.splice(index, 1)
       }
+
+      var ref = this.getZoneRef()
+      ref.child('files').child(this.current.file['.key']).remove()
     },
     renameFile (newFile) {
       console.log(newFile)
-      var currentFile = this.files.filter((eFile) => {
+      var currentFile = this.current.file = this.files.filter((eFile) => {
         return eFile.path === newFile.path
       })[0]
       currentFile.name = newFile.name
@@ -194,10 +204,13 @@ export default {
         return eFile.path === file.path
       })[0]
     },
+    getZoneRef () {
+      return api.db.ref().child('/vuejs').child(this.getUID()).child(this.getZID())
+    },
     saveFiles () {
       console.log(this.current.file)
 
-      var ref = api.db.ref().child('/vuejs').child(this.getUID()).child(this.getZID())
+      var ref = this.getZoneRef()
 
       // ref.child('files').set(this.files.map((item) => {
       //   var newItem = {
