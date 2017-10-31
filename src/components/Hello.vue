@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <router-link to="/login">Login</router-link>
   </div>
 </template>
 
@@ -9,7 +10,7 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js PWA'
+      msg: 'Welcome to lok\'s coding zone.'
     }
   }
 }
