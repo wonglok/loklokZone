@@ -50,14 +50,12 @@ exports.clearCacheOnSave = functions.database.ref('/vuejs/{uid}/{zid}/files').on
   console.log('***** Cleraing Cache at', zid)
   cache.set(zid + uid, false)
 
-  processInfo({ zid, uid, routeBase: '/v1/vuejs' })
+  // return event.data.ref.parent.child('refresher').set(Math.random())
+  return processInfo({ zid, uid, routeBase: '/v1/vuejs' })
     .then(({ mfs }) => {
       console.log('setting refresher')
-      admin.database().ref('/vuejs').child(uid).child(zid).child('refresher').set(Math.random())
+      return admin.database().ref('/vuejs').child(uid).child(zid).child('refresher').set(Math.random())
     })
-
-  // return event.data.ref.parent.child('refresher').set(Math.random())
-  return event.data.ref
 })
 
 function getZoneFiles ({ uid, zid }) {
