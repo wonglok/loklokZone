@@ -1,0 +1,62 @@
+[debug] [2017-10-30T22:02:44.596Z] ----------------------------------------------------------------------
+[debug] [2017-10-30T22:02:44.598Z] Command:       /Users/lok/.nvm/versions/node/v7.9.0/bin/node /Users/lok/.nvm/versions/node/v7.9.0/bin/firebase serve --only functions,hosting
+[debug] [2017-10-30T22:02:44.599Z] CLI Version:   3.13.1
+[debug] [2017-10-30T22:02:44.599Z] Platform:      darwin
+[debug] [2017-10-30T22:02:44.599Z] Node Version:  v7.9.0
+[debug] [2017-10-30T22:02:44.599Z] Time:          Tue Oct 31 2017 06:02:44 GMT+0800 (HKT)
+[debug] [2017-10-30T22:02:44.600Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-10-30T22:02:44.614Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-30T22:02:44.614Z] > authorizing via signed-in user
+[debug] [2017-10-30T22:02:44.617Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-10-30T22:02:44.617Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/sGbwP0wnm03XWWLfDIozZqbF5WSEjy9Kwj30CsRKeZ4',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Tue Oct 31 2017 06:02:44 GMT+0800 (HKT)
+[debug] [2017-10-30T22:02:44.746Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-30T22:02:44.764Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/loklok-zone  
+ Tue Oct 31 2017 06:02:44 GMT+0800 (HKT)
+[debug] [2017-10-30T22:02:45.676Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-30T22:02:45.677Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/loklok-zone/tokens  
+ Tue Oct 31 2017 06:02:45 GMT+0800 (HKT)
+[debug] [2017-10-30T22:02:46.513Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Volumes/Data/WONGLOK/WORK_IMPORTANT/WongLok/loklokZone'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2017-10-30T22:02:46.873Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/loklok-zone  
+ Tue Oct 31 2017 06:02:46 GMT+0800 (HKT)
+[debug] [2017-10-30T22:02:46.874Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/loklok-zone/apiKeys  
+ Tue Oct 31 2017 06:02:46 GMT+0800 (HKT)
+[debug] [2017-10-30T22:02:46.874Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/loklok-zone  
+ Tue Oct 31 2017 06:02:46 GMT+0800 (HKT)
+[debug] [2017-10-30T22:02:47.927Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-30T22:02:47.928Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/680362980709/clients/_:getWebAppConfig  
+ Tue Oct 31 2017 06:02:47 GMT+0800 (HKT)
+[debug] [2017-10-30T22:02:48.026Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-30T22:02:48.094Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-30T22:02:48.818Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] ✔  functions: app: http://localhost:5001/loklok-zone/us-central1/app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/uid/zid/dist/build.js to local function app
