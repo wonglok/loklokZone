@@ -208,7 +208,7 @@ export default {
     },
     selectFile (file) {
       console.log(file)
-      this.saveFiles()
+      this.saveFiles({ skip: true })
       this.current.file = this.files.filter((eFile) => {
         return eFile.path === file.path
       })[0]
@@ -216,7 +216,7 @@ export default {
     getZoneRef () {
       return api.db.ref().child('/vuejs').child(this.getUID()).child(this.getZID())
     },
-    saveFiles () {
+    saveFiles ({ skip }) {
       console.log(this.current.file)
 
       var ref = this.getZoneRef()
@@ -236,6 +236,9 @@ export default {
       }
       delete newData['.key']
       ref.child('files').child(this.current.file['.key']).set(newData).then(() => {
+        if (skip) {
+          return
+        }
         ref.child('refresher').set(Math.random())
       })
     }

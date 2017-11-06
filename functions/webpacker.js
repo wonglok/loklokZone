@@ -192,7 +192,7 @@ exports.webpacker = function ({ app, anotherBase }) {
     var uid = req.params.uid
 
     function sender ({ mfs }) {
-      if (req.query.mfs === 'show') {
+      if (req.query.mfs === 'debug') {
         res.send(mfs)
       } else if (req.path === routeBase + '/' + uid + '/' + zid + '/dist/index.html') {
         res.set('html')
