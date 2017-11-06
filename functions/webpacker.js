@@ -120,7 +120,7 @@ function setupSrc ({ base, uid, zid }) {
     var srcPath = path.join(process.cwd())
     var webpackBase = base
 
-    var wcfg = webpackConfig({ entryBase: srcPath, outputBase: webpackBase, minify: true })
+    var wcfg = webpackConfig({ entryBase: srcPath, outputBase: webpackBase, fastMini: true })
     var compiler = webpack(wcfg)
     var mfs = new MemoryFileSystem()
 

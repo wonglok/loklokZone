@@ -1,7 +1,7 @@
 // var path = require('path')
 var webpack = require('webpack')
 
-module.exports = function ({ rootBase, entryBase, outputBase, minify }) {
+module.exports = function ({ entryBase, outputBase, minify, fastMini }) {
   var result = {
     entry: entryBase + '/main.js',
     output: {
@@ -29,6 +29,9 @@ module.exports = function ({ rootBase, entryBase, outputBase, minify }) {
         {
           test: /\.js$/,
           loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
+          },
           exclude: /node_modules/
         },
         {
@@ -73,6 +76,17 @@ module.exports = function ({ rootBase, entryBase, outputBase, minify }) {
       }),
       new webpack.LoaderOptionsPlugin({
         minimize: true
+      })
+    ]
+  }
+
+  if (fastMini) {
+    result.devtool = '#eval'
+    result.plugins = [
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: '"production"'
+        }
       })
     ]
   }

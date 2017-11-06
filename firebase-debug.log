@@ -1,0 +1,181 @@
+[debug] [2017-11-06T05:17:37.741Z] ----------------------------------------------------------------------
+[debug] [2017-11-06T05:17:37.744Z] Command:       /Users/lok/.nvm/versions/node/v7.9.0/bin/node /Users/lok/.nvm/versions/node/v7.9.0/bin/firebase serve --only functions,hosting
+[debug] [2017-11-06T05:17:37.744Z] CLI Version:   3.13.1
+[debug] [2017-11-06T05:17:37.744Z] Platform:      darwin
+[debug] [2017-11-06T05:17:37.744Z] Node Version:  v7.9.0
+[debug] [2017-11-06T05:17:37.744Z] Time:          Mon Nov 06 2017 13:17:37 GMT+0800 (HKT)
+[debug] [2017-11-06T05:17:37.744Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-06T05:17:37.761Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-06T05:17:37.761Z] > authorizing via signed-in user
+[debug] [2017-11-06T05:17:37.763Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-11-06T05:17:37.763Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/sGbwP0wnm03XWWLfDIozZqbF5WSEjy9Kwj30CsRKeZ4',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Mon Nov 06 2017 13:17:37 GMT+0800 (HKT)
+[debug] [2017-11-06T05:17:37.893Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-06T05:17:37.906Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/loklok-zone  
+ Mon Nov 06 2017 13:17:37 GMT+0800 (HKT)
+[debug] [2017-11-06T05:17:39.160Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-06T05:17:39.160Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/loklok-zone/tokens  
+ Mon Nov 06 2017 13:17:39 GMT+0800 (HKT)
+[debug] [2017-11-06T05:17:40.710Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Volumes/Data/WONGLOK/WORK_IMPORTANT/WongLok/loklokZone'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2017-11-06T05:17:41.102Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/loklok-zone  
+ Mon Nov 06 2017 13:17:41 GMT+0800 (HKT)
+[debug] [2017-11-06T05:17:41.102Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/loklok-zone/apiKeys  
+ Mon Nov 06 2017 13:17:41 GMT+0800 (HKT)
+[debug] [2017-11-06T05:17:41.102Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/loklok-zone  
+ Mon Nov 06 2017 13:17:41 GMT+0800 (HKT)
+[debug] [2017-11-06T05:17:42.321Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-06T05:17:43.180Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-06T05:17:43.181Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/680362980709/clients/_:getWebAppConfig  
+ Mon Nov 06 2017 13:17:43 GMT+0800 (HKT)
+[debug] [2017-11-06T05:17:43.275Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-06T05:17:43.864Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] ✔  functions: app: http://localhost:5001/loklok-zone/us-central1/app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.9147998904979597 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.7711264003167744 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.2649204539046448 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js.map to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js.map to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js.map to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js.map to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.16982123980058494 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.29981932885612417 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.8464030202741344 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.8464030202741344 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.8464030202741344 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.8464030202741344 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.8464030202741344 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.8464030202741344 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.8464030202741344 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/index.html?force=compile&rand=0.4815468503681388 to local function app
+[info] [hosting] Rewriting /v1/vuejs/CC1EPYpIaAT2fdgnLe7sECnb4Dc2/-KxmL_bdYd_hEu_E9EsE/dist/build.js to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
+[info] [hosting] Rewriting /favicon.ico to local function app
