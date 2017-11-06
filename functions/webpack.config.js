@@ -81,7 +81,7 @@ module.exports = function ({ entryBase, outputBase, minify, fastMini }) {
   }
 
   if (fastMini) {
-    result.devtool = '#eval'
+    result.devtool = '#cheap-source-map'
     result.plugins = [
       new webpack.DefinePlugin({
         'process.env': {
