@@ -149,14 +149,13 @@ function setupSrc ({ base, uid, zid }) {
     compiler.resolvers.normal.fileSystem = mfs
     compiler.resolvers.context.fileSystem = mfs
 
-    getZoneFiles({ uid, zid }).then((zone) => {
+    return getZoneFiles({ uid, zid }).then((zone) => {
       // console.log(zone)
       return writeToMFS({ mfs, filesArr: transformToArray((zone && zone.files) || {}), srcPath, uid, zid, webpackBase })
     }).then(() => {
       resolve({ mfs, compiler })
       // resolve to compile
     })
-  //
   })
 }
 
@@ -187,6 +186,16 @@ function processInfo ({ zid, uid, routeBase }) {
 exports.webpacker = function ({ app, anotherBase }) {
   var routeBase = '/v1/vuejs'
 
+  app.post(routeBase + '/:uid/:zid*', (req, res) => {
+    var zid = req.params.zid
+    var uid = req.params.uid
+
+    processInfo({ zid, uid, routeBase })
+      .then(({ mfs }) => {
+        res.json({ status: 'okay' })
+      })
+  })
+
   app.get(routeBase + '/:uid/:zid*', (req, res) => {
     var zid = req.params.zid
     var uid = req.params.uid
@@ -211,13 +220,15 @@ exports.webpacker = function ({ app, anotherBase }) {
     }
 
     var data = cache.get(zid + uid)
-    if (req.query && req.query.force === 'compile') {
-      processInfo({ zid, uid, routeBase })
-        .then(({ mfs }) => {
-          sender({ mfs })
-          // res.json({ path: req.path, mfs })
-        })
-    } else if (data && data.state === 'ready') {
+    // if (req.query && req.query.force === 'compile') {
+    //   processInfo({ zid, uid, routeBase })
+    //     .then(({ mfs }) => {
+    //       sender({ mfs })
+    //       // res.json({ path: req.path, mfs })
+    //     })
+    // } else
+
+    if (data && data.state === 'ready') {
       var { mfs } = data
       sender({ mfs })
     } else if (data && data.state === 'compile') {

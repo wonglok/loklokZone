@@ -7,6 +7,8 @@
   <ul v-if="uid">
     <li :key="zid" v-for="(zone, zid) in zones">
       <router-link :to="{ path: `/editor/${uid}/${zid}` }">{{ zone.name }}</router-link>
+      <a class="preview" :href="`//${getBase()}/v1/vuejs/${uid}/${zid}/dist/index.html`" target="_blank">Preview</a>
+
       <button @click="removeZone({ zid })">RemoveZone</button>
     </li>
   </ul>
@@ -32,6 +34,14 @@ export default {
     })
   },
   methods: {
+    getBase () {
+      if (window.location.host === 'localhost:8080') {
+        return 'localhost:5000'
+      } else {
+        return window.location.host
+      }
+    },
+
     removeZone ({ zid }) {
       if (!window.confirm('RemoveZone?')) { return }
       api.db.ref().child('/vuejs').child(this.uid).child(zid).remove()
@@ -97,5 +107,9 @@ export default {
 </script>
 
 <style scoped>
+
+.preview{
+  color: green;
+}
 
 </style>

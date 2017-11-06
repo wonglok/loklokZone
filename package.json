@@ -17,6 +17,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.17.0",
     "firebase": "^4.6.0",
     "recursive-readdir": "^2.2.1",
     "vue": "^2.5.2",

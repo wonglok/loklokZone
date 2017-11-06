@@ -197,8 +197,7 @@ exports.refresher = function ({ uid, zid }) {
       var lastVal = false
       refresher.on('value', function (snapshot) {
         if (lastVal !== false) {
-          // window.location.reload()
-          window.location.search = ('?force=compile&rand=' + Math.random());
+          window.location.search = ('?rand=' + Math.random());
         }
         lastVal = snapshot.val()
       });

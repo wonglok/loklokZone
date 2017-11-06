@@ -2,7 +2,7 @@
   <div>
     <div class="menu">
       <router-link to="/dashboard">Dashboard</router-link>
-      <a :href="`//${getBase()}/v1/vuejs/${getUID()}/${getZID()}/dist/index.html`" target="_blank">Preview</a>
+      <a :href="`${getPreviewURL()}`" target="_blank">Preview</a>
       <input v-model="current.zoneName" @change="saveTitle()" @keyup.enter="saveTitle()" />
     </div>
     <div class="loader" :class="{ loading: loading }"></div>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import TreeFolder from '@/components/Parts/TreeFolder.vue'
 import Modal from '@/components/Parts/Modal.vue'
 import ACE from '@/components/Parts/ACE.vue'
@@ -70,12 +71,6 @@ export default {
     }
   },
   computed: {
-    readNewFiles () {
-      return [
-        ...this.files,
-        { ...this.newFile }
-      ]
-    },
     content () {
       var current = this.current
       if (current && current.file && current.file.content) {
@@ -122,6 +117,9 @@ export default {
         bucket.push(obj)
       }
       return bucket
+    },
+    getPreviewURL () {
+      return `//${this.getBase()}/v1/vuejs/${this.getUID()}/${this.getZID()}/dist/index.html`
     },
     getBase () {
       if (window.location.host === 'localhost:8080') {
@@ -186,16 +184,22 @@ export default {
       this.modal.data.content = this.modal.data.file.content
     },
     removeFile (path) {
-      var file = this.current.file = this.files.filter((file) => {
+      var file = this.files.filter((file) => {
         return file.path === path
       })[0]
+
+      if (file.content === this.current.file.content) {
+        this.current.file = this.files[0]
+      }
+
       var index = this.files.indexOf(file)
       if (index !== -1) {
         this.files.splice(index, 1)
       }
 
       var ref = this.getZoneRef()
-      ref.child('files').child(this.current.file['.key']).remove()
+      ref.child('files').child(file['.key']).remove()
+      this.saveFiles()
     },
     renameFile (newFile) {
       console.log(newFile)
@@ -231,15 +235,23 @@ export default {
       //   ref.child('refresher').set(Math.random())
       // })
 
+      this.loading = true
       var newData = {
         ...this.current.file
       }
       delete newData['.key']
       ref.child('files').child(this.current.file['.key']).set(newData).then(() => {
         if (skip) {
+          this.loading = false
           return
         }
-        ref.child('refresher').set(Math.random())
+        axios.post(this.getPreviewURL(), {
+          zone: { }
+        }).then((res) => {
+          console.log(res)
+          ref.child('refresher').set(Math.random())
+          this.loading = false
+        })
       })
     }
   }
