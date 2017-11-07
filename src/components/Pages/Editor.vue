@@ -246,7 +246,6 @@ export default {
           return
         }
         axios.post(this.getPreviewURL(), {
-          zone: { }
         }).then((res) => {
           console.log(res)
           ref.child('refresher').set(Math.random())
