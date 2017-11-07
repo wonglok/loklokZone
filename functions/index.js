@@ -3,4 +3,4 @@
 //
 
 exports.app = require('./fbia.js').app
-// exports.onWriteFiles = require('./webpacker').onWriteFiles
+exports.onWriteFiles = require('./webpacker').onWriteFiles

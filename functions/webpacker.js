@@ -44,13 +44,13 @@ var fs = require('fs')
 var buzz = makeEventBus()
 var cache = new LRU(50)
 
-// exports.clearCacheOnSave = functions.database.ref('/vuejs/{uid}/{zid}/files').onWrite(event => {
-//   var zid = event.params.zid
-//   var uid = event.params.uid
-//   console.log('***** Cleraing Cache at', zid)
-//   cache.set(zid + uid, false)
-//   return event.data.ref
-// })
+exports.onWriteFiles = functions.database.ref('/vuejs/{uid}/{zid}/files').onWrite(event => {
+  var zid = event.params.zid
+  var uid = event.params.uid
+  console.log('***** Cleraing Cache at', zid)
+  cache.set(zid + uid, false)
+  return event.data.ref
+})
 
 function getZoneFiles ({ uid, zid }) {
   return new Promise((resolve, reject) => {
