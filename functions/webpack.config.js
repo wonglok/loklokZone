@@ -40,6 +40,13 @@ module.exports = function ({ entryBase, outputBase, minify, fastMini }) {
           options: {
             name: '[name].[ext]?[hash]'
           }
+        },
+        {
+          test: /\.(frag|vert)$/,
+          loader: 'raw-loader',
+          options: {
+            name: '[name].[ext]?[hash]'
+          }
         }
       ]
     },

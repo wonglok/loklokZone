@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="editor-page">
     <div class="menu">
       <router-link to="/dashboard">Dashboard</router-link>
       <a :href="`${getPreviewURL()}`" target="_blank">Preview</a>
@@ -148,6 +148,12 @@ export default {
         if (ext === 'html') {
           ans = 'html'
         }
+        if (ext === 'vert') {
+          ans = 'glsl'
+        }
+        if (ext === 'frag') {
+          ans = 'glsl'
+        }
       } catch (e) {
         console.log(e)
       }
@@ -157,8 +163,10 @@ export default {
     editorInit () {
       require('brace/mode/html')
       require('brace/mode/javascript')
+      require('brace/mode/glsl')
       // require('brace/mode/sass')
       require('brace/theme/chrome')
+      require('brace/ext/searchbox')
     },
     addFile (path) {
       this.files.push({
@@ -261,7 +269,9 @@ export default {
 
 <style lang="scss" scoped>
 $height: calc(100% - 50px);
-
+.editor-page{
+  height: 100%;
+}
 .editor{
   width: 100%;
   height: $height;
@@ -273,6 +283,7 @@ $height: calc(100% - 50px);
   left: 0px;
   width: 250px;
   height: $height;
+  overflow-x: scroll;
 }
 .right-side{
   position: absolute;
