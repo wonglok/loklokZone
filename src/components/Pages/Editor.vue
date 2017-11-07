@@ -199,7 +199,7 @@ export default {
 
       var ref = this.getZoneRef()
       ref.child('files').child(file['.key']).remove()
-      this.saveFiles()
+      this.saveFiles({})
     },
     renameFile (newFile) {
       console.log(newFile)
@@ -208,7 +208,7 @@ export default {
       })[0]
       currentFile.name = newFile.name
       currentFile.path = currentFile.path.replace(newFile.oldFileName, newFile.name)
-      this.saveFiles()
+      this.saveFiles({})
     },
     selectFile (file) {
       console.log(file)
@@ -242,7 +242,9 @@ export default {
       delete newData['.key']
       ref.child('files').child(this.current.file['.key']).set(newData).then(() => {
         if (skip) {
-          this.loading = false
+          setTimeout(() => {
+            this.loading = false
+          }, 2000)
           return
         }
         axios.post(this.getPreviewURL(), {
@@ -305,10 +307,11 @@ $height: calc(100% - 50px);
 .loader{
   height: 3px;
   background: linear-gradient(90deg, lime, cyan, #ff00ff);
-  background-size: 250% 250%;
-  transition: background-position 1s;
+  background-size: 200% 200%;
   &.loading{
-    animation: simsim 3s ease-in-out 0s infinite normal both;
+    // background-position: 100% 100%;
+    // animation: simsim 1s ease-in-out 0s infinite normal both;
+    animation: simsim 1.5s ease-in-out 0s infinite normal both;
   }
 }
 </style>
