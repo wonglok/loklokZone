@@ -38,6 +38,7 @@ function makeEventBus () {
   }
   return api
 }
+
 var LRU = require('lru')
 var path = require('path')
 var fs = require('fs')

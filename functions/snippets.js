@@ -9,7 +9,6 @@ new Vue({
     el: '#app',
     template: '<App />'
 })
-
 `
 }
 

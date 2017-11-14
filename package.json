@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "cors": "gsutil cors set cors.json gs://loklok-zone.appspot.com",
+    "heroku": "git add .; git commit -a -m \"backup on `date +'%Y-%m-%d %H:%M:%S'`\"; git push heroku master;",
     "backup": "git add .; git commit -a -m \"backup on `date +'%Y-%m-%d %H:%M:%S'`\"; git push origin master;",
     "deployfunc": "npm run copyToFunc; cd functions; npm install; cd ..; firebase deploy --only functions;",
     "copyToFunc": "cp ./dist/index.html ./functions/dist/index.html; cp ./dist/service-worker.js ./functions/dist/service-worker.js; mv ./dist/index.html ./dist/_index.html",
