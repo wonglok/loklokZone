@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "cors": "gsutil cors set cors.json gs://loklok-zone.appspot.com",
-    "heroku": "git add .; git commit -a -m \"backup on `date +'%Y-%m-%d %H:%M:%S'`\"; git push heroku master;",
+    "heroku-logs": "cd ./remote-worker; heroku logs --tail;",
+    "heroku-local": "cd ./remote-worker; PORT=3000 nodemon index.js;",
+    "heroku-deploy": "cd ./remote-worker; git add .; git commit -a -m \"backup on `date +'%Y-%m-%d %H:%M:%S'`\"; git push heroku master;",
     "backup": "git add .; git commit -a -m \"backup on `date +'%Y-%m-%d %H:%M:%S'`\"; git push origin master;",
     "deployfunc": "npm run copyToFunc; cd functions; npm install; cd ..; firebase deploy --only functions;",
     "copyToFunc": "cp ./dist/index.html ./functions/dist/index.html; cp ./dist/service-worker.js ./functions/dist/service-worker.js; mv ./dist/index.html ./dist/_index.html",
@@ -57,6 +59,7 @@
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.4",
     "node-sass": "^4.5.3",
+    "nodemon": "^1.12.1",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.3.0",

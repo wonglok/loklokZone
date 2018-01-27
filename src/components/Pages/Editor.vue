@@ -4,6 +4,8 @@
       <router-link to="/dashboard">Dashboard</router-link>
       <a :href="`${getPreviewURL()}`" target="_blank">Preview</a>
       <input v-model="current.zoneName" @change="saveTitle()" @keyup.enter="saveTitle()" />
+      <button @click="exportFiles">Export</button>
+      <input type="file" @change="importFiles" />
     </div>
     <div class="loader" :class="{ loading: loading }"></div>
     <div class="editor" v-if="is404">
@@ -84,6 +86,30 @@ export default {
     this.prepZone()
   },
   methods: {
+    importFiles (evt) {
+      var file = evt.target.files[0]
+      var reader = new FileReader()
+      reader.onload = (evt) => {
+        var result = evt.target.result
+        try {
+          var lastPath = this.current.file.path
+          this.files = JSON.parse(result)
+          this.current.file = this.files.find((f) => { return f.path === lastPath })
+          this.$forceUpdate()
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      reader.readAsText(file)
+    },
+    exportFiles () {
+      var str = JSON.stringify(this.files)
+      var url = URL.createObjectURL(new Blob([str]))
+      var anchor = document.createElement('a')
+      anchor.download = 'code.json'
+      anchor.href = url
+      anchor.click()
+    },
     saveTitle () {
       this.getZoneRef().child('name').set(this.current.zoneName)
     },
